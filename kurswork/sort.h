@@ -1,12 +1,10 @@
-#pragma sort
+#pragma once
 
-#include "pch.h"
+list *base_sort = new list();
 
-struct tQ {
-	list *head;
-	list *tail;
-};
+list* sorting(list* pList, unsigned int iDigit);
 
-void rasheplen(list* &, list* &, list* &, int &);
-int sravn(record *, record *);
+
+//void rasheplen(list* &, list* &, list* &, int &);
+//int sravn(record *, record *);
 //void mergesort(list*&);

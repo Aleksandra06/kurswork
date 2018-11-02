@@ -1,4 +1,5 @@
 #include "print.h"
+#include "pch.h"
 
 void print_record(record *t) {
 	SetConsoleCP(1251);///Меняем кодировку

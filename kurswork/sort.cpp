@@ -1,39 +1,102 @@
 #include "sort.h"
+#include "pch.h"
 
 
-void rasheplen(list* &head, list* &a, list* &b, int &n) {
-	list *p, *q;
-	a = head;
-	b = head->next;
-	n = 1;
-	p = a;
-	q = b;
-	while (q)
+//pList - начало списка указателей на строки
+//iDigit - разряд, по которому сортирует
+//возвращает указатель на первый элемент отсортированной последовательности
+list* sorting(list* pList, unsigned int iDigit) {
+	// количество вариантов значения одного разряда (char)
+	const int iRange = 256;
+	int j;
+
+	//массив bucket-ов (под-списков)
+	list* front[iRange];
+	memset(front, 0, sizeof(front));///Функция memset заполняет num байтов блока памяти, через указатель memptr. Код заполняемого символа передаётся в функцию через параметр val.
+
+	list** ppNextItem[iRange];
+	for (int i = 0; i < iRange; i++)
+		ppNextItem[i] = &front[i];
+
+	//разбиваем список на bucket-ты, в зависимости от значения разряда
+	while ()	{
+		list* temp = pList;
+		pList = pList->next;
+
+		temp->next = NULL; //отключаем от списка
+
+		char c = (char)temp->data->author[iDigit];
+		*ppNextItem[c] = temp;
+		ppNextItem[c] = &temp->next;
+	}
+
+	//строим выходной список
+	list* pResult = NULL;
+	list** ppNext = &pResult;
+
+	//нулевой bucket возвращаем весь - он уже отсортирован
+	*ppNext = front[0];
+	while (*ppNext)
+		ppNext = &((*ppNext)->next);
+
+	for (int i = 1; i < iRange; i++)
 	{
-		n++;
-		p->next = q->next;
-		p = q;
-		q = q->next;
+		//пустые - пропускаем
+		if (!front[i])
+			continue;
+
+		j = 0;
+		if ((iDigit>2))// сразу добавляем если ключ закончен
+			while (!front[j]) {
+				*ppNext = front[j];
+				j++;
+			}
+		else
+			if (front[i]->next == NULL)// с одним элементом - сразу добавляем
+				*ppNext = front[i];
+			else    // остальные - на сортировку по следующему разряду
+				*ppNext = sorting(front[i], iDigit + 1);
+
+		while (*ppNext)
+			ppNext = &((*ppNext)->next);
 	}
+
+	return pResult;
 }
 
-int sravn(record *a, record *b) {
-	for (int i = 0; i < 3; i++) {
-		if ((int)a->publisher[i] < (int)b->publisher[i])
-			return -1;
-		else
-			if ((int)a->publisher[i] > (int)b->publisher[i])
-				return 1;
-	}
-	for (int i = 0; i < 3; i++) {
-		if ((int)a->author[i] < (int)b->author[i])
-			return -1;
-		else
-			if ((int)a->author[i] > (int)b->author[i])
-				return 1;
-	}
-	return 0;
-}
+//void rasheplen(list* &head, list* &a, list* &b, int &n) {
+//	list *p, *q;
+//	a = head;
+//	b = head->next;
+//	n = 1;
+//	p = a;
+//	q = b;
+//	while (q)
+//	{
+//		n++;
+//		p->next = q->next;
+//		p = q;
+//		q = q->next;
+//	}
+//}
+//
+//int sravn(record *a, record *b) {
+//	for (int i = 0; i < 3; i++) {
+//		if ((int)a->publisher[i] < (int)b->publisher[i])
+//			return -1;
+//		else
+//			if ((int)a->publisher[i] > (int)b->publisher[i])
+//				return 1;
+//	}
+//	for (int i = 0; i < 3; i++) {
+//		if ((int)a->author[i] < (int)b->author[i])
+//			return -1;
+//		else
+//			if ((int)a->author[i] > (int)b->author[i])
+//				return 1;
+//	}
+//	return 0;
+//}
 
 //void mergesort(list* &head){
 //	int L = 3;
