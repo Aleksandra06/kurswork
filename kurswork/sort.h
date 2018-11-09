@@ -1,8 +1,10 @@
 #pragma once
+#include "pch.h"
 
-list *base_sort = new list();
+//list *base_sort = new list();
 
-list* sorting(list* pList, unsigned int iDigit);
+
+void DigitalSort(list *&S);
 
 
 //void rasheplen(list* &, list* &, list* &, int &);
