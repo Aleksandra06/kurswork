@@ -8,47 +8,60 @@ struct queue {//очереди
 	list *tail;
 } Q;
 
-void DigitalSort(list *&S) {
-	queue Q[256];//объявление очереди
-	list *p = NULL;
-	for (int i = 0; i < 256; i++) {
-		Q[i].tail = (list*)&(Q[i].head);//инициализация очередей 
+
+void prior(list *p) {
+	p->prior = NULL;
+	for (int i = 1; i < N; i++) {
+		p->next->prior = p;
+		p = p->next;
 	}
-	for (int j = 0; j < L; j++) {//цикл по колиеству байт
+}
+
+void DigitalSort(list *&head) {
+
+	queue Q[256];
+
+	for (int i = 0; i < 256; i++) {
+		Q[i].tail = (list*)&(Q[i].head);
+	}
+
+	list *p;
+
+	for (int j = 0; j < L; j++) {
+		cout << "!";
 		for (int i = 0; i < 256; i++) {
-			Q[j].tail = Q[j].head = NULL;
+			Q[i].tail = Q[i].head = NULL;
 		}
-		//p = S;//п-указатель на структуру, кот. будет сортироваться 
-		while (S != NULL) {//разбиваем список на очереди
-			int d = S->data->publisher[j] + 128;//получаем байт
-			cout << " d=" << d;
-			Q[d].head;
+
+		while (head) {
+			int d;
+			d = head->data->publisher[j] + 128;
 			p = Q[d].tail;
 			if (Q[d].head == NULL)
-				Q[d].head = S;
+				Q[d].head = head;
 			else
-				p->next = S;
-			p = Q[d].tail = S;
-			S = S->next;
+				p->next = head;
+
+			p = Q[d].tail = head;
+			head = head->next;
 			p->next = NULL;
 		}
-		cout << endl << endl;
-		S = NULL;//(указатель на укзаательи — П) чтобы использовать его как * списка
-		int i;
-		for (i = 0; i < 256; i++) {
-			if (Q[i].head != NULL)
-				break;
-		}
-		S = Q[i].head;
-		//cout << S->data->year;
-		p = Q[i].tail;
-		for (int k = i + 1; k < 256; k++) {//создания списка из очередей
-			if (Q[k].head != NULL) {//добавляем только те очереди которые изменились
-				p->next = Q[k].head;
-				p = Q[k].tail;
+
+		head = NULL;
+
+			int i;
+			for (i = 0; i < 256; i++) {
+				if (Q[i].head != NULL)
+					break;
 			}
-		}
-		//p->next = NULL;
+			head = Q[i].head;
+			p = Q[i].tail;
+			for (int k = i + 1; k < 256; k++) {
+				if (Q[k].head != NULL) {
+					p->next = Q[k].head;
+					p = Q[k].tail;
+				}
+			}
 	}
-		
+	prior(head);
 }
