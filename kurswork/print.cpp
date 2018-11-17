@@ -25,16 +25,17 @@ void print_base(list *l) {
 		i = 0;
 		system("cls"); cout << c << endl;
 		cout << "+-----+------------+--------------------------------+----------------+------+-----+" << endl;
-		while (i < M) {
+		while ((i < M) && (num <= N)) {
 			cout << "|";
 			cout << setw(4) << num << ")|";
 			print_record(l->data);
 			cout << "+-----+------------+--------------------------------+----------------+------+-----+" << endl;
 			num++;
 			i++;
-			l = l->next;
 			if (l->next == NULL)
 				break;
+			else
+				l = l->next;
 		}
 		SetConsoleCP(866);///Возвращаем кодировку
 		c = _getch();
