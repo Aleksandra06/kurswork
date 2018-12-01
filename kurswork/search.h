@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
 
-void move(list *&, int);
+void masiving(list *, list *[N]);
 int compare(char *, char *);
-void binary_search(char *, list *&, queue *&);
+void binary_search(char *, list *[N], queue *&);

@@ -75,8 +75,10 @@ void print_stak(queue *p) {
 			cout << "+-----+------------+--------------------------------+----------------+------+-----+" << endl;
 			num++;
 			i++;
-			if ((l->next == NULL) || (p->tail != l->next))
+			if ((l->next == NULL) || (p->tail == l->next)) {
+				num--;
 				break;
+			}
 			else
 				l = l->next;
 		}

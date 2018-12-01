@@ -1,11 +1,11 @@
 #include "search.h"
 #include "pch.h"
 
-void move(list *&p, int num) {
-	for (int i = 0; i < num; i++) {
-		p = p->next;
+void masiving(list *l, list *r[N]) {
+	for (int i = 0; i < N; i++) {
+		r[i] = l;
+		l = l->next;
 	}
-	//return;
 }
 
 int compare(char *a, char *b) {
@@ -17,38 +17,44 @@ int compare(char *a, char *b) {
 	return 0;
 }
 
-void binary_search(char *x, list *&l, queue *&turn) {
+void binary_search(char *x, list *l[N], queue *&turn) {
 	int L = 1;
 	int R = N;
-	int m;
+	int m, h, t;
 	int sravn;
-	list *t;
-	t = l;
 	turn = new queue();
 	turn->head = turn->tail;
 	while (L < R) {
 		m = (L + R) / 2;
-		t = l;
-		move(t, m - 1);
-		sravn = compare(t->data->publisher, x);
+		sravn = compare(l[m]->data->publisher, x);
 		if (sravn == 1) {
 			L = m + 1;
 		}
 		else {
-			if (sravn != 1) {
+			if (sravn == -1) {
 				R = m;
 			}
+			else
+				if (sravn == 0) {
+					h = m;
+					t = m;
+					while (compare(l[h - 1]->data->publisher, x) == 0) {
+						h--;
+						if (l[h - 1] == NULL)
+							break;
+					}
+					while (compare(l[t + 1]->data->publisher, x) == 0) {
+						t++;
+						if (l[t + 1] == NULL)
+							break;
+					}
+					turn->head = l[h];
+					turn->tail = l[t];
+					cout << "Ок";
+					return;
+				}
 		}
 	}
-	cout << "ok";
-	if (compare(t->data->publisher, x) == 0) {
-		while (compare(l->prior->data->publisher, x) == 0)
-			turn->head = turn->head->prior;
-		while (compare(t->prior->data->publisher, x) == 0)
-			turn->tail = turn->tail->prior;
-	}
-	else {
-		cout << "Такой записи нет";
-	}
+	cout << "Такой записи нет";
 }
 
