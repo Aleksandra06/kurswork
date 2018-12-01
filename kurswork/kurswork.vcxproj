@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="print.h" />
+    <ClInclude Include="search.h" />
     <ClInclude Include="sort.h" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="print.cpp" />
+    <ClCompile Include="search.cpp" />
     <ClCompile Include="sort.cpp" />
   </ItemGroup>
   <ItemGroup>

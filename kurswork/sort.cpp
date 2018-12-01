@@ -1,10 +1,7 @@
 #include "sort.h"
 #include "pch.h"
 
-struct queue {
-	list *head;
-	list *tail;
-} Q;
+queue Q;
 
 void copy_base(list *a, list *b) {
 	b->prior = NULL;
@@ -78,7 +75,7 @@ void DigitalSort1(list *&head) {
 	prior(head);
 }
 
-void DigitalSort(list *&head) {
+void DigitalSort(list *&head, bool flag) {
 
 	queue Q[257];
 
@@ -95,10 +92,18 @@ void DigitalSort(list *&head) {
 
 		while (head) {
 			int d;
-			if (head->data->author[j] == ' ')
-				d = 0;
-			else
-				d = head->data->author[j] + 129;
+			if (flag == 0) {
+				if (head->data->author[j] == ' ')
+					d = 0;
+				else
+					d = head->data->author[j] + 129;
+			}
+			else {
+				if (head->data->publisher[j] == ' ')
+					d = 0;
+				else
+					d = head->data->publisher[j] + 129;
+			}
 			p = Q[d].tail;
 			if (Q[d].head == NULL)
 				Q[d].head = head;
@@ -126,7 +131,10 @@ void DigitalSort(list *&head) {
 			}
 		}
 	}
-	DigitalSort1(head);
+	if (flag == 0)
+		DigitalSort(head, 1);
+	else
+		prior(head);
 }
 
 
