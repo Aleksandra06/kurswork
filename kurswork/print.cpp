@@ -23,7 +23,7 @@ void print_base(list *l) {
 	int c = 0;
 	while (flag) {
 		i = 0;
-		system("cls"); cout << c << endl;
+		system("cls");
 		cout << "+-----+------------+--------------------------------+----------------+------+-----+" << endl;
 		while ((i < M) && (num <= N)) {
 			cout << "|";
@@ -66,7 +66,7 @@ void print_stak(queue *p) {
 	int c = 0;
 	while (flag) {
 		i = 0;
-		system("cls"); /*cout << c << endl;*/
+		system("cls");
 		cout << "+-----+------------+--------------------------------+----------------+------+-----+" << endl;
 		while ((i < M) && (p->tail != l)) {
 			cout << "|";

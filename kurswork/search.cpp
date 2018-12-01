@@ -40,21 +40,19 @@ void binary_search(char *x, list *l[N], queue *&turn) {
 					t = m;
 					while (compare(l[h - 1]->data->publisher, x) == 0) {
 						h--;
-						if (l[h - 1] == NULL)
+						if (h - 1 == 0)
 							break;
 					}
 					while (compare(l[t + 1]->data->publisher, x) == 0) {
 						t++;
-						if (l[t + 1] == NULL)
+						if (t + 1 == 4000)
 							break;
 					}
 					turn->head = l[h];
 					turn->tail = l[t];
-					cout << "Ок";
 					return;
 				}
 		}
 	}
-	cout << "Такой записи нет";
 }
 
