@@ -109,17 +109,18 @@ void weight(queue *&q) {
 }
 
 void tree_search(vertex *&p, short int x) {
-	while (p != NULL) {
-		if (p->fact->data->year == x) {
-			print_base(p->fact);
+	vertex *tmp = p;
+	while (tmp != NULL) {
+		if (tmp->fact->data->year == x) {
+			print_base(tmp->fact);
 			return;
 		}
 		else
-			if (p->fact->data->year > x)
-				p = p->left;
+			if (tmp->fact->data->year > x)
+				tmp = tmp->left;
 			else
-				if (p->fact->data->year < x)
-					p = p->right;
+				if (tmp->fact->data->year < x)
+					tmp = tmp->right;
 	}
 	cout << " нига не найдена" << endl;
 }
