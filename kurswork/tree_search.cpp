@@ -47,7 +47,7 @@ extern int num_h, num_t;
 //	}
 //}
 
-void add(vertex *&point, record *x) 
+void add(vertex *&point, record *x)
 {
 	vertex **p = &point;
 
@@ -60,26 +60,24 @@ void add(vertex *&point, record *x)
 				p = &((*p)->right);
 			}
 			else
-				if ((*x).year == (*p)->fact->data->year)	{
+				if ((*x).year == (*p)->fact->data->year) {
 					(*p)->fact->next = new list();
 					(*p)->fact->next->data = x;
 					(*p)->fact->next->prior = (*p)->fact;
 					(*p)->fact->next->next = NULL;
-				}
-				else {
-					(*p) = new vertex();
-					(*p)->fact = new list();
-					(*p)->fact->data = x;
-					(*p)->fact->next = NULL;
-					(*p)->fact->prior = NULL;
-					(*p)->left = NULL;
-					(*p)->right = NULL;
 					return;
 				}
 	}
-	
+	if ((*p) == NULL) {
+		(*p) = new vertex();
+		(*p)->fact = new list();
+		(*p)->fact->data = x;
+		(*p)->fact->next = NULL;
+		(*p)->fact->prior = NULL;
+		(*p)->left = NULL;
+		(*p)->right = NULL;
+	}
 }
-
 
 void DOP_A2(vertex *&q, list *mas[N], int L, int R) {
 	int wes = 0, summa = 0;
@@ -117,10 +115,10 @@ void tree_search(vertex *&p, short int x) {
 			return;
 		}
 		else
-			if (p->fact->data->year < x)
+			if (p->fact->data->year > x)
 				p = p->left;
 			else
-				if (p->fact->data->year > x)
+				if (p->fact->data->year < x)
 					p = p->right;
 	}
 	cout << " нига не найдена" << endl;

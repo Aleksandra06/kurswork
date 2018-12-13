@@ -109,8 +109,10 @@ void print_tree(vertex *&p) {
 	list *tmp = p->fact;
 	print_tree(p->left);
 	tmp = p->fact;
-	while (p->fact != NULL) {
+	cout << "+-----+------------+--------------------------------+----------------+------+-----+" << endl;
+	while (tmp != NULL) {
 		print_record(tmp->data);
+
 		tmp = tmp->next;
 	}
 	print_tree(p->right);
