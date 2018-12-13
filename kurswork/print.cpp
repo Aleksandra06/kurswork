@@ -25,7 +25,7 @@ void print_base(list *l) {
 		i = 0;
 		system("cls");
 		cout << "+-----+------------+--------------------------------+----------------+------+-----+" << endl;
-		while ((i < M) && (num <= N)) {
+		while ((i < M) && (num <= N) && (l != NULL)) {
 			cout << "|";
 			cout << setw(4) << num << ")|";
 			print_record(l->data);
@@ -103,3 +103,24 @@ void print_stak(queue *p) {
 			}
 	}
 }
+
+void print_tree(vertex *&p) {
+	if (p == NULL) return;
+	list *tmp = p->fact;
+	print_tree(p->left);
+	tmp = p->fact;
+	while (p->fact != NULL) {
+		print_record(tmp->data);
+		tmp = tmp->next;
+	}
+	print_tree(p->right);
+}
+
+//void print_queue(queue *&x) {//Обход слева направо
+//	list *t;
+//	t = x->head;
+//	while (t != x->tail) {
+//		print_record(t->data);
+//		t = t->next;
+//	}
+//}
