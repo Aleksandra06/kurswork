@@ -5,51 +5,9 @@
 
 extern int num_h, num_t;
 
-//void add(vertex *&point, record *x) {
-//	vertex **p = &point;
-//		if (p == NULL)
-//		{
-//			p = new vertex();
-//			p->fact = new queue();
-//			p->fact->head = new list();
-//			p->fact->head->data = x;
-//			p->fact->head->next = NULL;
-//			p->fact->head->prior = NULL;
-//			p->fact->tail = p->fact->head;
-//			p->left = NULL;
-//			p->right = NULL;
-//			return;
-//		}
-//		while (*p) {
-//		//else
-//			if ((*x).year < p->fact->tail->data->year) {
-//				//add(p->left, x);
-//				p = p->left;
-//			}
-//			else
-//				if ((*x).year > p->fact->tail->data->year) {
-//					//add(p->right, x);
-//					p = p->right;
-//				}
-//				else
-//					//if ((*x).year == p->fact->tail->data->year) 
-//				{
-//					/*p->fact->tail->next = new list();
-//					p->fact->tail->next->data = x;
-//					p->fact->tail->next->prior = p->fact->tail;
-//					p->fact->tail = p->fact->tail->next;*/
-//					list *tmp = new list();
-//					tmp->data = x;
-//					tmp->next = p->fact->tail->next;
-//					p->fact->tail->next = tmp;
-//					p->fact->tail = tmp;
-//				}
-//	}
-//}
-
-void add(vertex *&point, record *x)
-{
+void add(vertex *&point, record *x) {
 	vertex **p = &point;
+	list *tmp;
 
 	while (*p) {
 		if ((*x).year < (*p)->fact->data->year) {
@@ -61,10 +19,14 @@ void add(vertex *&point, record *x)
 			}
 			else
 				if ((*x).year == (*p)->fact->data->year) {
-					(*p)->fact->next = new list();
-					(*p)->fact->next->data = x;
-					(*p)->fact->next->prior = (*p)->fact;
-					(*p)->fact->next->next = NULL;
+					tmp = (*p)->fact;
+					while (tmp->next != NULL) {
+						tmp = tmp->next;
+					}
+					tmp->next = new list();
+					tmp->next->data = x;
+					tmp->next->prior = (*p)->fact;
+					tmp->next->next = NULL;
 					return;
 				}
 	}
@@ -100,11 +62,42 @@ void DOP_A2(vertex *&q, list *mas[N], int L, int R) {
 	}
 }
 
-void weight(queue *&q) {
-	srand(time_t(NULL));
+void weight(list *mas[N]) {
 	w = new int[num_t - num_h + 1];
 	for (int i = 0; i < (num_t - num_h + 1); i++) {
-		w[i] = rand() % 99 + 1;
+		w[i] = rand() % 999 + 1;
+	}
+	QuickSort(w, mas, 0, num_t - num_h);
+}
+
+void QuickSort(int *a, list *mas[N],  int left, int right) {
+	int current, i, j, t;
+	list *tmp;
+	current = a[left]; i = left; j = right;
+
+	while (i <= j) {
+		while (a[i] < current) {
+			i++;
+		}
+		while (a[j] > current) {
+			j--;
+		}
+		if (i <= j) {
+			t = a[i];
+			a[i] = a[j];
+			a[j] = t;
+			tmp = mas[i + num_h];
+			mas[i + num_h] = mas[j + num_h];
+			mas[j + num_h] = tmp;
+			i++; j--;
+		}
+	}
+
+	if (left < j) {
+		QuickSort(a, mas, left, j);
+	}
+	if (i < right) {
+		QuickSort(a, mas, i, right);
 	}
 }
 

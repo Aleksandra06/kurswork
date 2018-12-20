@@ -104,19 +104,73 @@ void print_stak(queue *p) {
 	}
 }
 
-void print_tree(vertex *&p) {
-	if (p == NULL) return;
+void LorR(vertex *&p, vertex *&stop) {
+	if ((p == NULL) || (p == stop)) return;
 	list *tmp = p->fact;
-	print_tree(p->left);
+	LorR(p->left, stop);
 	tmp = p->fact;
-	cout << "+-----+------------+--------------------------------+----------------+------+-----+" << endl;
 	while (tmp != NULL) {
 		print_record(tmp->data);
-
 		tmp = tmp->next;
 	}
-	print_tree(p->right);
+	cout << "---------------------------------------------------------------------------" << endl;
+	LorR(p->right, stop);
 }
+
+void LorL(vertex *&p, vertex *&stop) {
+	if ((p == NULL) || (p == stop) || (p == stop->right)) return;
+	list *tmp = p->fact;
+	LorR(p->left, stop);
+	tmp = p->fact;
+	while (tmp != NULL) {
+		print_record(tmp->data);
+		tmp = tmp->next;
+	}
+	cout << "---------------------------------------------------------------------------" << endl;
+	LorR(p->right, stop);
+}
+
+void print_tree(vertex *&p) {
+	if (p == NULL) return;
+	vertex *stop = p;
+	list *tmp;
+	int c;
+	while (true) {
+		c = 0;
+		SetConsoleCP(866);
+		while ((c != 161) && (c != 27) && (c != 238)) {
+			if (_kbhit()) {///Пользоавтель нажал на кнопку = 1
+				c = _getch();
+			}
+		}
+		switch (c) {
+		case 27:
+			system("cls");
+			return;
+		case 161:
+			system("cls");
+			LorR(p->left, stop);
+			tmp = p->fact;
+			while (tmp != NULL) {
+				print_record(tmp->data);
+				tmp = tmp->next;
+			}
+			cout << "---------------------------------------------------------------------------" << endl;
+			break;
+		case 238:
+			system("cls");
+			tmp = p->fact;
+			while (tmp != NULL) {
+				print_record(tmp->data);
+				tmp = tmp->next;
+			}
+			cout << "---------------------------------------------------------------------------" << endl;
+			LorR(p->right, stop);
+			break;
+		}
+	}
+}
+
 
 //void print_queue(queue *&x) {//Обход слева направо
 //	list *t;
