@@ -73,13 +73,15 @@ void weight(list *mas[N]) {
 void QuickSort(int *a, list *mas[N],  int left, int right) {
 	int current, i, j, t;
 	list *tmp;
-	current = a[left]; i = left; j = right;
+	current = mas[left + num_h]->data->year; 
+	i = left; 
+	j = right;
 
 	while (i <= j) {
-		while (a[i] < current) {
+		while (mas[i + num_h]->data->year < current) {
 			i++;
 		}
-		while (a[j] > current) {
+		while (mas[j + num_h]->data->year > current) {
 			j--;
 		}
 		if (i <= j) {
