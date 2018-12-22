@@ -45,7 +45,7 @@ void print_base(list *l) {
 			}
 		}
 		if (c == 161) {
-			for (i = 0; i < 40; i++) {
+			for (int j = 0; j < i + 20; j++) {
 				if (l->prior == NULL) break;
 				l = l->prior;
 				num--;
@@ -89,6 +89,13 @@ void print_stak(queue *p) {
 				c = _getch();
 			}
 		}
+		if ((p->tail == l->next) && (c == 238)) {
+			for (int j = 0; j < i - 1; j++) {
+				if (l->prior == NULL) break;
+				l = l->prior;
+				num--;
+			}
+		}
 		if (c == 161) {
 			for (i = 0; i < 40; i++) {
 				if ((l->prior == NULL) || (p->head == l)) break;
@@ -116,12 +123,3 @@ void print_tree(vertex *&p) {
 	cout << "---------------------------------------------------------------------------" << endl;
 	print_tree(p->right);
 }
-
-//void print_queue(queue *&x) {//Обход слева направо
-//	list *t;
-//	t = x->head;
-//	while (t != x->tail) {
-//		print_record(t->data);
-//		t = t->next;
-//	}
-//}
