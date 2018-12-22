@@ -124,6 +124,8 @@ void code_file() {
 }
 
 void print() {
+	entropy = (float)(0);
+	midlength = (float)(0);
 	int j;
 	int i;
 	float check = 0;
