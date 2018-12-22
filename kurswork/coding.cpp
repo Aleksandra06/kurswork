@@ -18,12 +18,18 @@ code A[M];
 long int n = 0;
 float entropy = (float)(0);
 float midlength = (float)(0);
+int sim_cf = 0, sim_f = 0;
 
 void reading() {
 	int i, j = 0, e;
 	FILE *f;
 	errno_t err; 
 	err = fopen_s(&f, "Base1.dat", "rb");
+	if (err != 0)
+	{
+		cout << "Ошибка: невозможно открыть файл" << endl;
+		exit(1);
+	}
 	for (i = 0; i < M; i++) {
 		A[i].a = i;
 		A[i].q = (float)(0);
@@ -90,6 +96,33 @@ int shanon() {
 	return 0;
 }
 
+void code_file() {
+	FILE *f, *cf;
+	errno_t err;
+	err = fopen_s(&f, "Base1.dat", "rb");
+	if (err != 0)
+	{
+		SetConsoleCP(866);
+		cout << "Ошибка: невозможно открыть файл" << endl;
+		exit(1);
+	}
+	err = fopen_s(&cf, "CodeBase.dat", "wb");
+	char sim;
+	while (!feof(f)) {
+		fscanf_s(f, "%c", &sim);
+		sim_f++;
+		for (int i = 0; i < n; i++) {
+			if (sim == A[i].a) {
+				for (int j = 0; j < A[i].l; j++) {
+					putc(A[i].w[j], cf);
+					sim_cf++;
+				}
+			}
+		}
+	}
+	_fcloseall();
+}
+
 void print() {
 	int j;
 	int i;
@@ -106,10 +139,11 @@ void print() {
 			cout << A[i].w[j];
 		cout << endl;
 	}
-
+	SetConsoleCP(866);
 	cout << endl;
-	cout << setw(8) << "Middling length: " << midlength << endl;
-	cout << setw(8) << "Entropy: " << entropy << endl;
+	cout << setw(8) << "Средняя длина: " << midlength << endl;
+	cout << setw(8) << "Энтропия: " << entropy << endl;
 	cout << setw(8) << entropy + 1 << " > " << midlength << endl << endl;
+	cout << setw(8) << "Коэфициент сжатия: " << (float) sim_f / sim_cf << endl;
 	_getch();
 }
