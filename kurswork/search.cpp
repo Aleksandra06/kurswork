@@ -57,4 +57,3 @@ void binary_search(char *x, list *l[N], queue *&turn) {
 		}
 	}
 }
-
